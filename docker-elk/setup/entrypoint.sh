@@ -83,3 +83,20 @@ done
 
 mkdir -p "$(dirname "${state_file}")"
 touch "$state_file"
+
+curl -X PUT "localhost:9200/_index_template/tweets-location" -H 'Content-Type: application/json' -d'
+{
+  "template": {
+    "mappings": {
+      "properties": {
+        "coordinates": {
+          "type": "geo_point"
+        }
+      }
+    }
+  },
+  "index_patterns": [
+    "tweets"
+  ]
+}
+'
